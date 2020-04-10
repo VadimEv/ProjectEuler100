@@ -16,17 +16,14 @@ function constructNum (num) {
   return parseInt(str.padEnd(num, str), 10)
 }
 /* not nearly the optimal way, revisiting it later */
-function matrix (rows, cols) {
+/* Safe to assume that palindromes lie in upper halves */
+function matrix (num) {
   var arr = []
   // Creates all lines:
-  for (var i = 0; i < rows; i++) {
-    // Creates an empty line
-    arr.push([])
-    // Adds cols to the empty line:
-    arr[i].push(new Array(cols))
-    for (var j = 0; j < cols; j++) {
+  for (var i = Math.floor(num / 2); i < num + 1; i++) {
+    for (var j = Math.floor(num / 2); j < num + 1; j++) {
       // Initializes:
-      arr[i][j] = i * j
+      if (isPalindrome(i * j)) { arr.push(i * j) }
     }
   }
   return arr
@@ -34,13 +31,8 @@ function matrix (rows, cols) {
 function largestPalindromeProduct (num) {
   // construct the dimension
   const dim = constructNum(num)
-  // since array of arrays is constructed, aka matrix, aka 2D table we need to take 0 row into account thus + 1
-  const table = matrix(dim + 1, dim + 1)
-  // Faltter 2D array into 1D
-  const flattened = table.reduce(
-    (accumulator, currentValue) => accumulator.concat(currentValue), [])
   // remove all zero and non palidrome numbers
-  const pals = flattened.filter(isPalindrome)
+  const pals = matrix(dim)
   return Math.max.apply(Math, pals)
 }
 
