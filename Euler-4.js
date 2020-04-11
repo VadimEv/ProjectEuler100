@@ -1,4 +1,6 @@
 /* Finds largest palindrome product of N-digit numbers, ex 99*91=9009 */
+/* utilise latest server worker interface to log time */
+var performance = window.performance
 /* First function needed is to check if number is palindrome, it's adapted sofPalindrome from my JsChucnks repo */
 function isPalindrome (num) {
   const numStr = num.toString()
@@ -11,18 +13,17 @@ function isPalindrome (num) {
   }
 }
 /* Second function return largest N digit number, super simple */
-function constructNum (num) {
+function largestN (num) {
   const str = '9'
   return parseInt(str.padEnd(num, str), 10)
 }
-/* not nearly the optimal way, revisiting it later */
-/* Safe to assume that palindromes lie in upper half and due to symmetry we need only half of those */
+/* first assumption any palindrome is dvisible by smallest possible non-trivial palindrome 11
+   second assumption, any 1(n)1 squared is palindrome, so lower bound is somewhere above largestN - 1(n)1
+   thus we use num * 0.8888888 */
 function matrix (num) {
   var max = 0
-  // Creates all lines:
-  for (var i = Math.floor(num * 0.8); i < num + 1; i++) {
+  for (var i = Math.floor(num * (8 / 9)); i < num + 1; i++) {
     for (var j = i; j < num + 1; j++) {
-      // Initializes:
       if (isPalindrome(i * j) && (max < i * j)) {
         max = i * j
       }
@@ -31,10 +32,18 @@ function matrix (num) {
   return max
 }
 function largestPalindromeProduct (num) {
-  // construct the dimension
-  const dim = constructNum(num)
-  // remove all zero and non palidrome numbers
-  return matrix(dim)
+  // construct largest num - some space to opti here
+  const dim = largestN(num)
+  // remove all zero and non palidrome numbers and store largest, with time control
+  // some space to optimize large number multiplication
+  var t0 = performance.now()
+  const a = matrix(dim)
+  var t1 = performance.now()
+  console.log('Calculation took ' + (t1 - t0) + ' milliseconds.')
+  return a
 }
 
-largestPalindromeProduct(2)
+largestPalindromeProduct(2) // 9009 1ms
+largestPalindromeProduct(3) // 906609 8ms
+largestPalindromeProduct(4) // 99000099 502ms
+largestPalindromeProduct(5) // 9966006699 72s
