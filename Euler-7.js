@@ -26,4 +26,4 @@ function nthPrime (n) {
   return primes.pop()
 }
 
-nthPrime(101);
+nthPrime(101)
