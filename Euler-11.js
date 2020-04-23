@@ -83,3 +83,4 @@ const testGrid = [
 ]
 
 largestGridProduct(testGrid)
+largestGridProduct(grid)
