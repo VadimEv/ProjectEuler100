@@ -4,9 +4,7 @@ function specialPythagoreanTriplet (num) {
     if (!b) { return a }
     return gcd(b, a % b)
   }
-  function gcdMax (arr) {
-    return arr.reduce((a, b) => gcd(a, b))
-  }
+
   const softLimit = Math.floor(Math.sqrt(sumOfabc / 2))
   // Euclid says Hi! again
   let k = 0
@@ -23,9 +21,9 @@ function specialPythagoreanTriplet (num) {
         if (((sumOfabc / (2 * m)) % k === 0) && (gcd(k, m) === 1)) {
           d = sumOfabc / 2 / (k * m)
           n = k - m
-          let a = d * (m ** 2 - n ** 2)
-          let b = 2 * d * n * m
-          let c = d * (m * m + n * n)
+          const a = d * (m ** 2 - n ** 2)
+          const b = 2 * d * n * m
+          const c = d * (m * m + n * n)
           return a * b * c
         }
         k += 2
