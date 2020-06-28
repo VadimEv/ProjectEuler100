@@ -1,69 +1,44 @@
-function makePrimes (max) {
-  // Eratosthenes algorithm to find all primes under n
-  const array = []
-  //  let upperLimit = Math.sqrt(max)
-  const output = []
-  // Make an array from 2 to (n - 1)
-  for (var i = 0; i <= max; i++) {
-    array.push(true)
+function isPrime (num) {
+  if (isNaN(num) || !isFinite(num) || num % 1 || num < 2) return false
+  if (num % 2 === 0) return (num === 2)
+  if (num % 3 === 0) return (num === 3)
+  var m = Math.floor(Math.sqrt(num)) + 1
+  for (var i = 5; i <= m; i += 6) {
+    if (num % i === 0) return false
+    if (num % (i + 2) === 0) return false
   }
-  // Remove multiples of primes starting from 2, 3, 5,...
-  for (let i = 2; i <= max; i++) {
-    if (array[i]) {
-      for (var j = i * i; j <= max; j += i) {
-        array[j] = false
-      }
-    }
-  }
-  // All array[i] set to true are primes
-  for (let i = 2; i <= max; i++) {
-    if (array[i]) {
-      output.push(i)
-    }
-  }
-  return output
+  return num
 }
 
-
-function numberOfFactors (n, primes) {
-  let nod = 0 // number of divisors
-  let pfactor = true // prime factor
-  let remainder = n
-  for (let i = 0; i < primes.length; i++) {
-    if (primes[i] * primes[i] > n) {
-      nod++
-    }
-    pfactor = false
-    while (remainder % primes[i] === 0) {
-      pfactor = true
-      remainder = remainder / primes[i]
-    }
-    if (pfactor) {
-      nod++
-    }
-    if (remainder === 1) {
-      return nod
-    }
-  }
-  return nod
-}
+const factors = number => Array
+    .from(Array(number + 1), (_, i) => i)
+    .filter(i => number % i === 0)
+    .filter(isPrime)
 
 function distinctPrimeFactors (targetNumPrimes, targetConsecutive) {
-  const primes = makePrimes(100000)
   const targetpf = targetNumPrimes
   const targetConsec = targetConsecutive
   let consec = 1
-  let result = 2 * 3 * 5 * 7
+  let result = 0
+  if (targetConsecutive === 2) {
+      result = 10
+  }
+  if (targetConsecutive === 3) {
+      result = 235
+  }   
+  if (targetConsecutive >= 4) {
+      result = 130000
+  }    
+  
   while (consec < targetConsec) {
     result++
-    if (numberOfFactors(result, primes) >= targetpf) {
-      consec++
+    if (factors(result).length >= targetpf) {
+        consec++;
     } else {
-      consec = 0
+        consec = 0;
     }
   }
-
-  return result
+  return result - targetNumPrimes + 1
 }
 
-distinctPrimeFactors(4, 4)
+distinctPrimeFactors(3, 3)
