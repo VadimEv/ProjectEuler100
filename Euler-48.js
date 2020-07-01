@@ -22,3 +22,23 @@ function multi (a, b) {
 function expi (a, b) {
     return Array.from({length: b}, (v, i) => a).reduce(function (a, b) { return multi(a, b) })
 }
+
+function tetri (a, b) {
+    return Array.from({length: b}, (v, i) => a).reduce(function (a, b) { return expi(a, b) })
+}
+
+function penti (a, b) {
+    return Array.from({length: b}, (v, i) => a).reduce(function (a, b) { return tetri(a, b) })
+}
+
+function selfPowers(power, lastDigits) {
+  let sum = BigInt(0)
+  let numberN = BigInt(1)
+  let powerN = BigInt(power)
+  for (let i = numberN; i <= powerN; i = i + 1n) {
+    sum += i ** i
+  }
+    const ans = parseInt(sum.toString().slice(-lastDigits))
+   return ans
+}
+selfPowers(1000, 10);
