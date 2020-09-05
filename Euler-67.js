@@ -5,7 +5,7 @@
 //                                      B C
 // If B > C we need A + B, else A + C, now lets map this to entire pyramid. It's that simple
 
-function maximumPathSumI (triangle) {
+function maximumPathSumII (triangle) {
   let input = [...triangle]
   // Due to JS nature of arrays, it's reference object, we need deep copy, i.e. copy elements not by reference
   // but by value
@@ -25,4 +25,4 @@ const testTriangle = [[3, 0, 0, 0],
                       [2, 4, 6, 0],
                       [8, 5, 9, 3]]
 
-maximumPathSumI(testTriangle)
+maximumPathSumII(testTriangle)
