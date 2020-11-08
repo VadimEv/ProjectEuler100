@@ -1,6 +1,6 @@
-function pathSumTwoWays(arr) {
+function pathSumTwoWays(array) {
+    let arr = JSON.parse(JSON.stringify(array));
     var len = arr.length
-    
     for (var i = len - 2; i > -1; i--) {
         arr[len - 1][i] += arr[len - 1][i + 1];
         arr[i][len - 1] += arr[i+1][len - 1];
