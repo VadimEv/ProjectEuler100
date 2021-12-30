@@ -4,7 +4,9 @@ function selfPowers(power, lastDigits) {
 
   for (var i = 1; i < power + 1; i++) {
       let temp = i;
-      for (var j = 1; j < i; j++) { temp *= i; if (temp > 1 + Number.MAX_SAFE_INTEGER / 1000) {
+      for (var j = 1; j < i; j++) {
+        temp *= i;
+        if (temp > 1 + Number.MAX_SAFE_INTEGER / 1000) {
               temp %= modulo;
           }
       }
