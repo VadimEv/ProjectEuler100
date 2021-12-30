@@ -1,20 +1,34 @@
-function digitSum(n) {
-    return n.toString().split('').map((x) => parseInt(x)).reduce((a, b) => a + b)
+function power(numA, numB) {
+  let sum = 1n;
+  for (let b = 0; b < numB; b++) {
+    sum = sum * BigInt(numA);
+  }
+  return sum;
 }
 
-function powerfulDigitSum() {
-  const limit = 100
-  let result = BigInt(1)
-  
-  for (let a = limit - 1; a > 0; a--) {
-    for (let b = limit - 1; b > 0; b--) {
-        let number = BigInt(a) ** BigInt(b);
-        let sum = digitSum(number);
+function digitSum(numA, numB) {
+  let digitsSum = 0;
+  let number = power(numA, numB);
+  while (number > 0n) {
+    const digit = number % 10n;
+    digitsSum += parseInt(digit, 10);
+    number = number / 10n;
+  }
+  return digitsSum;
+}
+
+function powerfulDigitSum(n) {
+  const limit = n - 1
+  let result = 0;
+
+  for (let a = limit; a > 0; a--) {
+    for (let b = limit; b > 0; b--) {
+        let sum = digitSum(a, b);
         if (sum > result)
             result = sum;
     }
   }
-  return result    
+  return result
 }
 
-powerfulDigitSum();
+powerfulDigitSum(3);
